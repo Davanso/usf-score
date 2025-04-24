@@ -1,11 +1,19 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Header from "./components/Header";
+import Home from "./pages/Home";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("home");
+
   return (
-    <Routes>
-      <Route path="/" element={<h1>Home</h1>} />
-    </Routes>
+    <>
+      <Header currentPage={currentPage} setPage={setCurrentPage} />
+      <main className="p-4">
+        {currentPage === "home" && <Home section="home" />}
+        {currentPage === "scores" && <Home section="scores" />}
+      </main>
+    </>
   );
 }
 

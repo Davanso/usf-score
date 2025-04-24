@@ -5,23 +5,24 @@ Project to Universidade São Francisco - USF!
 ## 🛠️ Tech Stack
 
 ⚙️ Base do Projeto
-React com TypeScript (via Vite)
 
-Vite (build rápido e moderno)
+- React com TypeScript (via Vite)
+
+- Vite (build rápido e moderno)
 
 🎨 Estilização
-Tailwind CSS (utilitário CSS moderno)
 
-ShadCN UI (componentes acessíveis e estilizados com Tailwind)
+- Tailwind CSS (utilitário CSS moderno)
+
+- ShadCN UI (componentes acessíveis e estilizados com Tailwind)
 
 🧩 Componentes Visuais
-Lucide React (ícones bonitos e leves)
 
-🌐 Roteamento
-React Router DOM (para navegar entre páginas como Home, Scores, etc.)
+- Lucide React (ícones bonitos e leves)
 
 🧪 Qualidade de Código
-ESLint
+
+- ESLint
 
 | Emoji                  | Commit type or Scope | Description                                                                                                     |
 | ---------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
