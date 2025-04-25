@@ -13,7 +13,7 @@ import { MdScoreboard } from "react-icons/md";
 
 const Header = () => {
   return (
-    <header className="bg-[#121212] text-white w-full px-20 py-2">
+    <header className="bg-[#181818] text-white w-full px-20 py-2">
       {/* Linha 1 */}
       <div className="flex justify-between items-center px-4 py-3 gap-4 flex-wrap">
         {/* Logo */}

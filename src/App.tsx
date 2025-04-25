@@ -1,19 +1,13 @@
 import React from "react";
-import { useState } from "react";
 import Header from "./components/Header";
-import Home from "./pages/Home";
+import MainCompetitions from "./components/Main_Competitions";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-
   return (
-    <>
-      <Header currentPage={currentPage} setPage={setCurrentPage} />
-      <main className="p-4">
-        {currentPage === "home" && <Home section="home" />}
-        {currentPage === "scores" && <Home section="scores" />}
-      </main>
-    </>
+    <div className="bg-[#000000] min-h-screen">
+      <Header />
+      <MainCompetitions />
+    </div>
   );
 }
 
