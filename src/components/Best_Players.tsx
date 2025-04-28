@@ -59,11 +59,16 @@ const BestPlayers: React.FC = () => {
   const visiblePlayers = showAll ? players : players.slice(0, 3);
 
   return (
-    <div className="p-8 fixed top-45 right-10 w-110 flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white">
+    <div
+      className={`p-8 ml-auto mt-10 mr-10 w-[400px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-300 ${
+        showAll ? "max-h-[800px]" : "max-h-[600px]"
+      } overflow-hidden`}
+    >
+      {/* Título do componente */}
       <h2 className="text-center text-xl font-bold mb-2">Melhores jogadores</h2>
 
       {/* Lista de jogadores */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 cursor-pointer">
         {visiblePlayers.map((player, index) => (
           <div
             key={player.id}
@@ -92,7 +97,7 @@ const BestPlayers: React.FC = () => {
                 <img
                   src={heat_map_neymar}
                   alt="Heatmap"
-                  className="rounded-xl w-full h-55 object-cover"
+                  className="rounded-xl w-full h-[220px] object-cover"
                 />
               </div>
             )}

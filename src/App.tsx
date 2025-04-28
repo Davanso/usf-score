@@ -7,8 +7,10 @@ function App() {
   return (
     <div className="bg-[#000000] min-h-screen">
       <Header />
-      <MainCompetitions />
-      <BestPlayers />
+      <div className="flex">
+        <MainCompetitions />
+        <BestPlayers />
+      </div>
     </div>
   );
 }
