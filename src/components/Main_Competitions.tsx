@@ -39,7 +39,7 @@ const MainCompetitions: React.FC = () => {
   const visibleCompetitions = showAll ? competitions : competitions.slice(0, 4);
 
   return (
-    <div className="p-8 fixed left-30 top-45 w-80 flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white">
+    <div className="p-8 fixed left-10 top-45 w-80 flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white">
       {/* Título do componente */}
       <h2 className="text-center text-xl font-bold mb-4">
         Principais competições
