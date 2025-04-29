@@ -6,19 +6,21 @@ Project to Universidade São Francisco - USF!
 
 ⚙️ Base do Projeto
 
-- React com TypeScript (via Vite)
+- React com TypeScript
 
-- Vite (build rápido e moderno)
+- Vite
+
+💻​ API
+
+- API-FOOTBALL (3.9.3)
 
 🎨 Estilização
 
-- Tailwind CSS (utilitário CSS moderno)
-
-- ShadCN UI (componentes acessíveis e estilizados com Tailwind)
+- Tailwind CSS
 
 🧩 Componentes Visuais
 
-- Lucide React (ícones bonitos e leves)
+- React Icons
 
 🧪 Qualidade de Código
 
