@@ -1,4 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getTeamLogo } from "../../services/apiFootball";
+
+// COMPONENTE DE ESCUDO
+const TeamLogo: React.FC<{ teamName: string }> = ({ teamName }) => {
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const logo = await getTeamLogo(teamName);
+      setLogoUrl(logo);
+    };
+
+    fetchLogo();
+  }, [teamName]);
+
+  return (
+    <div className="text-center">
+      {logoUrl ? (
+        <img src={logoUrl} alt={teamName} className="w-10 h-10 mx-auto mb-1" />
+      ) : (
+        <div className="w-10 h-10 bg-gray-700 mx-auto mb-1 rounded" />
+      )}
+      <p className="text-sm">{teamName}</p>
+    </div>
+  );
+};
 
 const MatchHighlights: React.FC = () => {
   return (
@@ -10,27 +36,22 @@ const MatchHighlights: React.FC = () => {
 
       {/* Placar e times */}
       <div className="bg-[#111] flex justify-between items-center px-4 py-4 rounded-md">
-        <div className="text-center">
-          <img src="" alt="Time 1" className="mx-auto mb-1" />
-          <p className="text-sm">Real Madrid</p>
-        </div>
+        {/* Prop para passar o nome/escudo do time */}
+        <TeamLogo teamName="Corinthians" />
 
         <div className="text-center">
           <p className="text-2xl font-bold text-red-500">0 - 0</p>
           <p className="text-sm text-red-400">1º tempo</p>
         </div>
 
-        <div className="text-center">
-          <img src="" alt="Time 2" className="mx-auto mb-1" />
-          <p className="text-sm">Barcelona</p>
-        </div>
+        {/* Prop para passar o nome/escudo do time */}
+        <TeamLogo teamName="Palmeiras" />
       </div>
 
       {/* Odds e botão da casa */}
       <div className="bg-[#222] px-4 py-3 space-y-3 rounded-md">
         <div className="flex justify-between items-center text-sm">
           <span className="text-gray-300">Resultado final</span>
-          {/* <span className="text-green-400 font-semibold">Ao vivo</span> */}
           <div className="bg-[#ff4c0e] text-white text-xs px-2 py-1 rounded-md font-bold">
             Betano
           </div>
@@ -52,7 +73,6 @@ const MatchHighlights: React.FC = () => {
           </div>
         </div>
 
-        {/* Rodapé */}
         <div className="flex justify-between items-center text-xs text-gray-400 mt-2">
           <p>Aposte com responsabilidade 18+</p>
           <a href="#" className="text-blue-400 hover:underline">
