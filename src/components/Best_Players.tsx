@@ -84,10 +84,13 @@ const BestPlayers: React.FC = () => {
                   className="w-8 h-8 rounded-full"
                 />
                 <div className="flex flex-col">
+                  {/* Nome do Jogador */}
                   <span className="font-semibold text-sm">{player.name}</span>
+                  {/* Time do jogador */}
                   <span className="text-xs text-gray-400">{player.team}</span>
                 </div>
               </div>
+              {/* Avaliação do jogador */}
               <div className="text-blue-400 font-bold">{player.rating}</div>
             </div>
 
