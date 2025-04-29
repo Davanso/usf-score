@@ -60,7 +60,7 @@ const BestPlayers: React.FC = () => {
 
   return (
     <div
-      className={`p-8 ml-auto mt-10 mr-10 w-[400px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-300 ${
+      className={`p-8 w-[400px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-300 ${
         showAll ? "max-h-[800px]" : "max-h-[600px]"
       } overflow-hidden`}
     >
