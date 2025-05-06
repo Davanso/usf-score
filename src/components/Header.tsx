@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   FaSearch,
   FaStar,
@@ -10,8 +9,11 @@ import {
 } from "react-icons/fa";
 import { IoIosFootball, IoIosSettings } from "react-icons/io";
 import { MdScoreboard } from "react-icons/md";
+import { useLogin } from "../hooks/useLogin";
 
 const Header = () => {
+  const { user, loginWithGoogle, logout, loading } = useLogin();
+
   return (
     <header className="bg-[#181818] text-white w-full px-20 py-2">
       {/* Linha 1 */}
@@ -19,7 +21,6 @@ const Header = () => {
         {/* Logo */}
         <div className="text-xl font-semibold flex items-center gap-2">
           <MdScoreboard size={60} className="text-white" />
-          {/* Placeholder logo */}
           <span>USF SCORE</span>
         </div>
 
@@ -37,10 +38,31 @@ const Header = () => {
 
         {/* Ações */}
         <div className="flex items-center gap-4 text-gray-300">
-          <button className="bg-white text-black px-5 py-2 rounded text-xl font-medium">
-            <FaUser size={25} className="inline mr-1" />
-            ENTRAR
-          </button>
+          {user ? (
+            <div className="flex items-center gap-2 bg-white text-black px-4 py-1 rounded cursor-pointer">
+              <img
+                src={user.photo}
+                alt={user.name}
+                className="w-8 h-8 rounded-full"
+              />
+              <span className="text-sm font-medium">{user.name}</span>
+              <button
+                onClick={logout}
+                className="ml-2 text-xs text-black hover:text-red-500 cursor-pointer"
+              >
+                sair
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={loginWithGoogle}
+              className="bg-white text-black px-5 py-2 rounded text-xl font-medium cursor-pointer hover:bg-gray-200 transition duration-200 ease-in-out "
+              disabled={loading}
+            >
+              <FaUser size={25} className="inline mr-1" />
+              {loading ? "Carregando..." : "ENTRAR"}
+            </button>
+          )}
           <FaStar size={22} />
           <FaQuestion size={22} />
           <IoIosSettings size={25} />
@@ -50,19 +72,16 @@ const Header = () => {
       {/* Esportes */}
       <div className="overflow-x-auto px-4 py-2 border-t border-[#2a2a2a]">
         <div className="flex gap-6 items-center text-1xl whitespace-nowrap">
-          {/* Futebol */}
-          <div className="flex items-center gap-1 text-white font-semibold">
+          <div className="flex items-center gap-1 text-white font-semibold border-1 border-[#00000] rounded-2xl p-1.5 cursor-pointer hover:bg-gray-500">
             <IoIosFootball size={20} /> Futebol{" "}
             <span className="bg-gray-700 px-1 rounded text-xs">18</span>
           </div>
-          {/* Basquete */}
           <div className="flex items-center gap-1 text-gray-300">
-            <FaBasketballBall size={20} /> Basquete {""}
+            <FaBasketballBall size={20} /> Basquete{" "}
             <span className="bg-gray-700 px-1 rounded text-xs">6</span>
           </div>
-          {/* Vôlei */}
           <div className="flex items-center gap-1 text-gray-300">
-            <FaVolleyballBall size={20} /> Vôlei {""}
+            <FaVolleyballBall size={20} /> Vôlei{" "}
             <span className="bg-gray-700 px-1 rounded text-xs">2</span>
           </div>
         </div>
