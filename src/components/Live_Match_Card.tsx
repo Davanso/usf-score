@@ -2,18 +2,17 @@ import React from "react";
 
 interface Props {
   match: {
-    fixture: {
-      status: {
-        elapsed: number;
+    fixture?: {
+      status?: {
+        elapsed?: number;
       };
     };
-    teams: {
-      home: { name: string; logo: string };
-      away: { name: string; logo: string };
+    teams?: {
+      home?: { name?: string; logo?: string };
+      away?: { name?: string; logo?: string };
     };
-    goals: { home: number; away: number };
-    status: { elapsed: number };
-    league: { name: string; country: string };
+    goals?: { home?: number; away?: number };
+    league?: { name?: string; country?: string };
   };
 }
 
@@ -22,7 +21,8 @@ const LiveMatchCard = ({ match }: Props) => {
     <div className="bg-[#1e1e1e] rounded-2xl gap-4 w-150 h-[1325px] mt-10 mb-10 shadow-md p-4 text-white">
       {/* País e Liga */}
       <div className="text-sm text-gray-400 mb-2 p-2">
-        {match.league.country} • {match.league.name}
+        {match.league?.country ?? "País desconhecido"} •{" "}
+        {match.league?.name ?? "Liga desconhecida"}
       </div>
 
       {/* Times e placar */}
@@ -30,7 +30,9 @@ const LiveMatchCard = ({ match }: Props) => {
         {/* Lado esquerdo: tempo + logos */}
         <div className="flex flex-col justify-center items-center w-12">
           <span className="text-1xl text-red-500 font-semibold">
-            {match.fixture.status.elapsed}&apos;
+            {match.fixture?.status?.elapsed != null
+              ? `${match.fixture.status.elapsed}'`
+              : "?"}
           </span>
         </div>
 
@@ -39,30 +41,38 @@ const LiveMatchCard = ({ match }: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <img
-                src={match.teams.home.logo}
-                alt={match.teams.home.name}
+                src={match.teams?.home?.logo ?? "/placeholder.png"}
+                alt={match.teams?.home?.name ?? "Time da casa"}
                 className="w-6 h-6"
               />
-              <span className="text-sm">{match.teams.home.name}</span>
+              <span className="text-sm">
+                {match.teams?.home?.name ?? "Time da casa"}
+              </span>
             </div>
-            {/* Lado direito: Gols Home */}
+
             <div className="flex items-center gap-2 mr-3">
-              <span className="text-lg font-bold">{match.goals.home}</span>
+              <span className="text-lg font-bold">
+                {match.goals?.home != null ? match.goals.home : "-"}
+              </span>
             </div>
           </div>
 
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center gap-2">
               <img
-                src={match.teams.away.logo}
-                alt={match.teams.away.name}
+                src={match.teams?.away?.logo ?? "/placeholder.png"}
+                alt={match.teams?.away?.name ?? "Time visitante"}
                 className="w-6 h-6"
               />
-              <span className="text-sm">{match.teams.away.name}</span>
+              <span className="text-sm">
+                {match.teams?.away?.name ?? "Time visitante"}
+              </span>
             </div>
-            {/* Lado direito: Gols Away */}
+
             <div className="flex items-center gap-2 mr-3">
-              <span className="text-lg font-bold">{match.goals.away}</span>
+              <span className="text-lg font-bold">
+                {match.goals?.away != null ? match.goals.away : "-"}
+              </span>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import liveBrazilianMatchMock from "../mocks/liveBrazilianMatchMock";
 import oddsMock from "../mocks/oddsMock";
 
-const USE_MOCK = false;
+const USE_MOCK = true;
 
 const api = axios.create({
   baseURL: "https://v3.football.api-sports.io",
@@ -20,14 +20,20 @@ export const getLiveBrazilianMatch = async () => {
   const { data } = await api.get("/fixtures", { params: { live: "all" } });
   const matches = data.response;
 
-  const brazilianMatch = matches.find(
-    (match: any) =>
+  // Prioriza uma partida com time brasileiro no topo da lista
+  const sortedMatches = [...matches].sort((a: any, b: any) => {
+    const isBrazilian = (match: any) =>
       match.teams.home.name.toLowerCase().includes("brazil") ||
       match.teams.away.name.toLowerCase().includes("brazil") ||
-      match.league.country.toLowerCase() === "brazil"
-  );
+      match.league.country.toLowerCase() === "brazil";
 
-  return brazilianMatch || matches[0];
+    const aIsBrazilian = isBrazilian(a) ? -1 : 1;
+    const bIsBrazilian = isBrazilian(b) ? -1 : 1;
+
+    return aIsBrazilian - bIsBrazilian;
+  });
+
+  return sortedMatches;
 };
 
 export const getOdds = async (fixtureId: number) => {
