@@ -2,8 +2,11 @@ import React from "react";
 
 interface Props {
   match: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    fixture: any;
+    fixture: {
+      status: {
+        elapsed: number;
+      };
+    };
     teams: {
       home: { name: string; logo: string };
       away: { name: string; logo: string };

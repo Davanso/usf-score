@@ -38,7 +38,11 @@ const liveBrazilianMatchMock = {
     name: "Brasileirão Série A",
     country: "Brasil",
   },
-  fixture: { id: 12345 },
+  fixture: {
+    status: {
+      elapsed: 63,
+    },
+  },
 };
 
 export default liveBrazilianMatchMock;
