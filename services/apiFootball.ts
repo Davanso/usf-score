@@ -3,7 +3,7 @@ import axios from "axios";
 import liveBrazilianMatchMock from "../mocks/liveBrazilianMatchMock";
 import oddsMock from "../mocks/oddsMock";
 
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 const api = axios.create({
   baseURL: "https://v3.football.api-sports.io",

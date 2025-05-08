@@ -34,7 +34,10 @@ const liveBrazilianMatchMock = {
     },
   ],
   status: { elapsed: 60 },
-  league: { name: "Brasileirão Série A" },
+  league: {
+    name: "Brasileirão Série A",
+    country: "Brasil",
+  },
   fixture: { id: 12345 },
 };
 
