@@ -42,10 +42,14 @@ const MatchHighlights: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getLiveBrazilianMatch();
-      setMatch(data);
 
-      if (data?.fixture?.id) {
-        const oddsData = await getOdds(data.fixture.id);
+      // Se for um array, pega a primeira partida. Se for objeto, usa direto.
+      const matchData = Array.isArray(data) ? data[0] : data;
+
+      setMatch(matchData);
+
+      if (matchData?.fixture?.id) {
+        const oddsData = await getOdds(matchData.fixture.id);
         setOdds(oddsData);
       }
     };
