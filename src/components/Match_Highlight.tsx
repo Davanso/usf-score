@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getLiveBrazilianMatch, getOdds } from "../../services/apiFootball";
+import { FaFutbol } from "react-icons/fa";
 
 interface Team {
   name: string;
@@ -113,23 +114,41 @@ const MatchHighlights: React.FC = () => {
 
         {/* Lista de autores dos gols */}
         <div className="mt-4 w-full">
-          <h3 className="text-center text-sm font-bold text-gray-300">
+          <h3 className="text-center text-sm font-bold text-gray-300 mb-2">
             Gols da Partida
           </h3>
-          {match.events
-            .filter((event) => event.type === "Goal") // Filtra apenas eventos de gol
-            .map((event, idx) => (
-              <div
-                key={idx}
-                className="flex justify-between items-center text-sm text-gray-300"
-              >
-                <span>{event.time.elapsed}&apos;</span> {/* Minuto do gol */}
-                <span className="pl-10 justify-center">
-                  {event.player.name} {/* Nome do jogador */}
-                </span>{" "}
-                <span>{event.team.name}</span> {/* Nome do time */}
-              </div>
-            ))}
+          <div className="flex justify-between text-sm text-gray-300 gap-2">
+            {/* Gols do time da casa */}
+            <div className="flex flex-col items-end w-1/2 pr-2">
+              {match.events
+                .filter((event) => event.type === "Goal")
+                .map((event, idx) => (
+                  <span key={idx}>
+                    {event.player.name} {event.time.elapsed}&apos;
+                  </span>
+                ))}
+            </div>
+
+            {/* Ícone central */}
+            <div className="flex flex-col items-center justify-center text-green-500 gap-1.5">
+              {match.events
+                .filter((event) => event.type === "Goal")
+                .map((_, idx) => (
+                  <FaFutbol key={idx} />
+                ))}
+            </div>
+
+            {/* Gols do time visitante */}
+            <div className="flex flex-col items-start w-1/2 pl-2">
+              {match.events
+                .filter((event) => event.type === "Goal")
+                .map((event, idx) => (
+                  <span key={idx}>
+                    {event.player.name} {event.time.elapsed}&apos;
+                  </span>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
       {/* Simulação de odds ao vivo */}
