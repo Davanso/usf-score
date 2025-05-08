@@ -33,14 +33,14 @@ const liveBrazilianMatchMock = {
       type: "Goal",
     },
   ],
-  status: { elapsed: 60 },
+  status: { elapsed: 87 },
   league: {
     name: "Brasileirão Série A",
     country: "Brasil",
   },
   fixture: {
     status: {
-      elapsed: 63,
+      elapsed: 87,
     },
   },
 };

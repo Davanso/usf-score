@@ -69,13 +69,6 @@ const MatchHighlights: React.FC = () => {
 
   const goals = match.events?.filter((event) => event.type === "Goal") || [];
 
-  const homeGoals = goals.filter(
-    (event) => event.team?.name === match.teams?.home?.name
-  );
-  const awayGoals = goals.filter(
-    (event) => event.team?.name === match.teams?.away?.name
-  );
-
   return (
     <div className="p-8 mt-10 w-[400px] h-[580px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white overflow-hidden mx-auto">
       <div className="text-center font-bold text-lg border-b border-gray-700">
@@ -118,28 +111,36 @@ const MatchHighlights: React.FC = () => {
           <h3 className="text-center text-sm font-bold text-gray-300 mb-2">
             Gols da Partida
           </h3>
-          <div className="flex justify-between text-sm text-gray-300 gap-2">
-            <div className="flex flex-col items-end w-1/2 pr-2">
-              {homeGoals.map((event, idx) => (
-                <span key={idx}>
-                  {event.player?.name} {event.time?.elapsed}&apos;
-                </span>
-              ))}
-            </div>
+          <div className="flex flex-col gap-2 text-sm text-gray-300">
+            {goals.map((event, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between gap-2"
+              >
+                {/* Jogador do time da casa, alinhado à direita */}
+                <div className="w-1/3 text-right pr-2">
+                  {event.team.name === match.teams?.home?.name && (
+                    <span>
+                      {event.player.name} {event.time.elapsed}&apos;
+                    </span>
+                  )}
+                </div>
 
-            <div className="flex flex-col items-center justify-center text-green-500 gap-1.5">
-              {goals.map((_, idx) => (
-                <FaFutbol key={idx} />
-              ))}
-            </div>
+                {/* Ícone de bola no centro */}
+                <div className="w-1/3 flex justify-center text-green-500">
+                  <FaFutbol />
+                </div>
 
-            <div className="flex flex-col items-start w-1/2 pl-2">
-              {awayGoals.map((event, idx) => (
-                <span key={idx}>
-                  {event.player?.name} {event.time?.elapsed}&apos;
-                </span>
-              ))}
-            </div>
+                {/* Jogador do time visitante, alinhado à esquerda */}
+                <div className="w-1/3 text-left pl-2">
+                  {event.team.name === match.teams?.away?.name && (
+                    <span>
+                      {event.player.name} {event.time.elapsed}&apos;
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
