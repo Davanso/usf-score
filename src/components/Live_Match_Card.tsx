@@ -18,7 +18,7 @@ interface Props {
 
 const LiveMatchCard = ({ match }: Props) => {
   return (
-    <div className="bg-[#1e1e1e] rounded-2xl gap-4 w-150 h-[1325px] mt-10 mb-10 shadow-md p-4 text-white">
+    <div className="bg-[#1e1e1e] rounded-2xl gap-4 w-150 h-[1395px] mt-10 mb-10 shadow-md p-4 text-white">
       {/* País e Liga */}
       <div className="text-sm text-gray-400 mb-2 p-2">
         {match.league?.country ?? "País desconhecido"} •{" "}

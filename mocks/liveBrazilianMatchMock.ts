@@ -39,6 +39,7 @@ const liveBrazilianMatchMock = {
     country: "Brasil",
   },
   fixture: {
+    id: 12345,
     status: {
       elapsed: 87,
     },

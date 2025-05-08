@@ -70,7 +70,7 @@ const MatchHighlights: React.FC = () => {
   const goals = match.events?.filter((event) => event.type === "Goal") || [];
 
   return (
-    <div className="p-8 mt-10 w-[400px] h-[580px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white overflow-hidden mx-auto">
+    <div className="p-8 mt-10 w-[400px] h-[650px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white overflow-hidden mx-auto">
       <div className="text-center font-bold text-lg border-b border-gray-700">
         Ao Vivo - {match.league?.name || "Liga desconhecida"}
       </div>

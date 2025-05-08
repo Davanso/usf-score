@@ -12,6 +12,17 @@ const api = axios.create({
   },
 });
 
+export const getOdds = async (fixtureId: number) => {
+  if (USE_MOCK) {
+    return oddsMock;
+  }
+
+  const { data } = await api.get("/odds?live=all&bookmaker=6", {
+    params: { fixture: fixtureId },
+  });
+  return data.response[0]?.bookmakers || null;
+};
+
 export const getLiveBrazilianMatch = async () => {
   if (USE_MOCK) {
     return liveBrazilianMatchMock;
@@ -34,15 +45,4 @@ export const getLiveBrazilianMatch = async () => {
   });
 
   return sortedMatches;
-};
-
-export const getOdds = async (fixtureId: number) => {
-  if (USE_MOCK) {
-    return oddsMock;
-  }
-
-  const { data } = await api.get("/odds?live=all&bookmaker=6", {
-    params: { fixture: fixtureId },
-  });
-  return data.response[0]?.bookmakers || null;
 };
