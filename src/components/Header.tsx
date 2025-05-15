@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   FaSearch,
   FaStar,
@@ -7,7 +7,7 @@ import {
   FaVolleyballBall,
   FaBasketballBall,
 } from "react-icons/fa";
-import { IoIosFootball, IoIosSettings } from "react-icons/io";
+import { IoIosFootball } from "react-icons/io";
 import { MdScoreboard } from "react-icons/md";
 import { useLogin } from "../hooks/useLogin";
 import { COMPETITIONS } from "./Main_Competitions";
@@ -16,9 +16,44 @@ const Header = () => {
   // Estado para armazenar o usuário
   const { user, loginWithGoogle, logout, loading } = useLogin();
 
+  // Estado para armazenar os favoritos
   const [favorites, setFavorites] = useState<number[]>([]);
+
+  // Estado para controlar a visibilidade do dropdown de favoritos
   const [showDropdown, setShowDropdown] = useState(false);
+
+  // Estado para controlar a visibilidade do diálogo de informações
   const [showInfoDialog, setShowInfoDialog] = useState(false);
+
+  // Estado para controlar a visibilidade do menu do usuário
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  // Referência para o menu do usuário
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Referência para o menu de favoritos
+  const favoritesMenuRef = useRef<HTMLDivElement>(null);
+
+  // Efeito para fechar o menu do usuário ao clicar fora dele
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (userMenuRef.current && !userMenuRef.current.contains(target)) {
+        setShowUserMenu(false);
+      }
+
+      if (
+        favoritesMenuRef.current &&
+        !favoritesMenuRef.current.contains(target)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Efeito para armazenar os favoritos no localStorage
   useEffect(() => {
@@ -70,19 +105,35 @@ const Header = () => {
           {/* Login/Logout */}
           <div>
             {user ? (
-              <div className="flex items-center gap-2 bg-white text-black px-4 py-1 rounded cursor-pointer">
-                <img
-                  src={user.photo}
-                  alt={user.name}
-                  className="w-8 h-8 rounded-full"
-                />
-                <span className="text-sm font-medium">{user.name}</span>
+              <div className="relative" ref={userMenuRef}>
                 <button
-                  onClick={logout}
-                  className="ml-2 text-xs text-black hover:text-red-500 cursor-pointer"
+                  onClick={() => setShowUserMenu((prev) => !prev)}
+                  className="flex items-center gap-2 bg-white text-black px-4 py-1 rounded cursor-pointer"
                 >
-                  sair
+                  <img
+                    src={user.photo}
+                    alt={user.name}
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-sm font-medium">{user.name}</span>
                 </button>
+
+                <div
+                  className={`absolute right-0 mt-2 w-40 rounded-2xl shadow-lg z-50 text-sm text-white
+                  transition-all duration-200 transform origin-top bg-gray-600
+                  ${
+                    showUserMenu
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95 pointer-events-none"
+                  }`}
+                >
+                  <button
+                    onClick={logout}
+                    className="block w-full text-left px-4 py-2 hover:bg-red-900 rounded-2xl"
+                  >
+                    Sair da conta
+                  </button>
+                </div>
               </div>
             ) : (
               <button
@@ -97,7 +148,7 @@ const Header = () => {
           </div>
 
           {/* Favoritos */}
-          <div className="relative">
+          <div className="relative" ref={favoritesMenuRef}>
             <button onClick={toggleDropdown}>
               <FaStar
                 size={22}
@@ -140,8 +191,6 @@ const Header = () => {
             onClick={toggleInfoDialog}
             className="cursor-pointer hover:text-red-900 transition"
           />
-
-          <IoIosSettings size={25} />
         </div>
       </div>
 
