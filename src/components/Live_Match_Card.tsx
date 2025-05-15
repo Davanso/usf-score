@@ -88,7 +88,20 @@ const MatchHighlights: React.FC = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 mt-10 w-full max-w-[850px] min-w-0 md:min-w-[400px] max-h-[1395px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] overflow-y-hidden text-white overflow-auto mx-auto">
+    <div
+      className="
+        p-4 sm:p-6 md:p-8
+        mt-10       /* mobile: 3rem */
+        sm:mt-10    /* ≥640px: 2.5rem */
+        md:mt-8     /* ≥768px: 2rem */
+        lg:mt-10     /* ≥1024px: 1.5rem */
+        w-full max-w-[1000px] min-w-0 md:min-w-[650px]
+        max-h-[1400px]
+        flex flex-col rounded-2xl gap-4 shadow-md
+        bg-[#181818] overflow-y-hidden text-white
+        overflow-auto mx-auto mb-10
+      "
+    >
       <div className="text-center font-bold text-lg border-b border-red-700 mb-4">
         Partidas Ao Vivo
       </div>

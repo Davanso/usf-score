@@ -5,7 +5,6 @@ import neymar_png from "../assets/neymar_png.png";
 import cr7_png from "../assets/cr7_png.png";
 import messi_png from "../assets/messi_png.png";
 import depay_png from "../assets/depay_png.png";
-import rato_png from "../assets/rato_png.png";
 
 interface Player {
   id: number;
@@ -44,13 +43,6 @@ const players: Player[] = [
     rating: 9.4,
     imageUrl: depay_png,
   },
-  {
-    id: 5,
-    name: "Wellington Rato",
-    team: "Vitória",
-    rating: 3.3,
-    imageUrl: rato_png,
-  },
 ];
 
 const BestPlayers: React.FC = () => {
@@ -60,7 +52,7 @@ const BestPlayers: React.FC = () => {
 
   return (
     <div
-      className={`p-8 w-[400px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-300 ${
+      className={`p-7 w-[400px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-600 ${
         showAll ? "max-h-[800px]" : "max-h-[600px]"
       } overflow-hidden`}
     >
