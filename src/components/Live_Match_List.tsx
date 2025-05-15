@@ -15,7 +15,7 @@ interface Props {
     status: { elapsed: number };
     league: {
       name: string;
-      country?: string; // ← aqui está o ajuste importante
+      country?: string;
     };
   };
 }

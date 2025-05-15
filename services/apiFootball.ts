@@ -17,32 +17,57 @@ export const getOdds = async (fixtureId: number) => {
     return oddsMock;
   }
 
-  const { data } = await api.get("/odds?live=all&bookmaker=6", {
-    params: { fixture: fixtureId },
-  });
-  return data.response[0]?.bookmakers || null;
+  try {
+    const { data } = await api.get("/odds", {
+      params: { live: "all", bookmaker: 6, fixture: fixtureId },
+    });
+
+    return data.response?.[0]?.bookmakers || null;
+  } catch (error) {
+    console.error("Erro ao buscar odds:", error);
+    return null;
+  }
 };
 
-export const getLiveBrazilianMatch = async () => {
+export const getLiveBrazilianMatch = async (): Promise<any[]> => {
+  // Prioriza jogos do Brasil.
+  // Se não houver, tenta buscar partidas das principais ligas mundiais.
+  // Se ainda assim não houver, retorna qualquer partida ao vivo.
+
   if (USE_MOCK) {
-    return liveBrazilianMatchMock;
+    return Array.isArray(liveBrazilianMatchMock)
+      ? liveBrazilianMatchMock
+      : [liveBrazilianMatchMock];
   }
 
-  const { data } = await api.get("/fixtures", { params: { live: "all" } });
-  const matches = data.response;
+  try {
+    const { data } = await api.get("/fixtures", {
+      params: { live: "all" },
+    });
 
-  // Prioriza uma partida com time brasileiro no topo da lista
-  const sortedMatches = [...matches].sort((a: any, b: any) => {
+    const matches = Array.isArray(data?.response) ? data.response : [];
+
     const isBrazilian = (match: any) =>
       match.teams.home.name.toLowerCase().includes("brazil") ||
       match.teams.away.name.toLowerCase().includes("brazil") ||
       match.league.country.toLowerCase() === "brazil";
 
-    const aIsBrazilian = isBrazilian(a) ? -1 : 1;
-    const bIsBrazilian = isBrazilian(b) ? -1 : 1;
+    const brazilianMatches = matches.filter(isBrazilian);
 
-    return aIsBrazilian - bIsBrazilian;
-  });
+    if (brazilianMatches.length > 0) {
+      return brazilianMatches;
+    }
 
-  return sortedMatches;
+    // IDs das principais ligas: Premier League, La Liga, Serie A, Bundesliga, Ligue 1
+    const topLeagueIds = [39, 140, 135, 78, 61];
+
+    const topLeagueMatches = matches.filter((match: any) =>
+      topLeagueIds.includes(match.league.id)
+    );
+
+    return topLeagueMatches.length > 0 ? topLeagueMatches : matches;
+  } catch (error) {
+    console.error("Erro ao buscar partidas ao vivo:", error);
+    return [];
+  }
 };
