@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import {
-  FaStar,
-  FaRegStar,
-  FaChevronUp,
-  FaChevronDown,
-  FaTrophy,
-} from "react-icons/fa";
+// MainCompetitions.tsx
+import React, { useState, useCallback } from "react";
+import { FaChevronUp, FaChevronDown, FaTrophy } from "react-icons/fa";
+import CompetitionItem from "./Competition_Item";
 import { GB, ES, IT, DE, FR, BR, US } from "country-flag-icons/react/3x2";
 
-interface Competition {
+export interface Competition {
   id: number;
   name: string;
   icon: React.ReactNode;
 }
 
-const competitions: Competition[] = [
+const COMPETITIONS: Competition[] = [
   { id: 1, name: "Brasileirão", icon: <BR className="w-6 h-4" /> },
   { id: 2, name: "La Liga", icon: <ES className="w-6 h-4" /> },
   { id: 3, name: "Premier League", icon: <GB className="w-6 h-4" /> },
@@ -26,59 +22,46 @@ const competitions: Competition[] = [
 ];
 
 const MainCompetitions: React.FC = () => {
-  const [favorites, setFavorites] = useState<number[]>([]); // Estado para controlar comp. favoritas
-  const [showAll, setShowAll] = useState(false); // Estado para controlar exibição de todas as competições
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [showAll, setShowAll] = useState(false);
 
-  const toggleFavorite = (id: number) => {
+  const toggleFavorite = useCallback((id: number) => {
     setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
     );
-  };
+  }, []);
 
-  // Para alternar a exibição de todas as competições
-  const visibleCompetitions = showAll ? competitions : competitions.slice(0, 4);
+  const toggleShowAll = useCallback(() => {
+    setShowAll((prev) => !prev);
+  }, []);
+
+  const visibleCompetitions = showAll ? COMPETITIONS : COMPETITIONS.slice(0, 4);
 
   return (
-    <div
-      className={`p-8 mt-10 ml-10 w-[300px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white transition-all duration-300 ${
-        showAll ? "max-h-[600px]" : "max-h-[380px]"
-      } overflow-hidden`}
+    <section
+      className={
+        `p-8 mt-10 ml-10 w-72 flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white ` +
+        `transition-all duration-300 overflow-y-hidden ${
+          showAll ? "max-h-[600px]" : "max-h-[380px]"
+        }`
+      }
     >
-      {/* Título do componente */}
       <h2 className="text-center text-xl font-bold mb-4">
-        Principais competições
+        Principais Competições
       </h2>
-
-      {/* Lista de competições */}
-      {visibleCompetitions.map((competition) => (
-        <div
-          key={competition.id}
-          className="flex items-center justify-between p-1.5 rounded-lg shadow-md hover:bg-[#2a2a2a] transition duration-200 ease-in-out cursor-pointer"
-        >
-          {/* Informações da competição */}
-          <div className="flex items-center space-x-4">
-            <span className="text-1xl">{competition.icon}</span>
-            <span className="text-lg font-semibold">{competition.name}</span>
-          </div>
-
-          {/* Botão de favorito */}
-          <button
-            className="text-xl cursor-pointer"
-            onClick={() => toggleFavorite(competition.id)}
-          >
-            {favorites.includes(competition.id) ? (
-              <FaStar className="text-yellow-500" />
-            ) : (
-              <FaRegStar className="text-gray-400" />
-            )}
-          </button>
-        </div>
-      ))}
-
-      {/* Botão de expandir/recolher */}
+      <ul className="flex flex-col gap-2 overflow-y-auto">
+        {visibleCompetitions.map((comp) => (
+          <CompetitionItem
+            key={comp.id}
+            competition={comp}
+            isFavorite={favorites.includes(comp.id)}
+            onToggleFavorite={toggleFavorite}
+          />
+        ))}
+      </ul>
       <button
-        className="flex items-center justify-center mt-4 text-sm font-medium text-blue-300 hover:text-white cursor-pointer"
-        onClick={() => setShowAll((prev) => !prev)}
+        className="flex items-center justify-center mt-4 text-sm font-medium text-blue-300 hover:text-white focus:outline-none cursor-pointer"
+        onClick={toggleShowAll}
       >
         {showAll ? (
           <>
@@ -90,7 +73,7 @@ const MainCompetitions: React.FC = () => {
           </>
         )}
       </button>
-    </div>
+    </section>
   );
 };
 
