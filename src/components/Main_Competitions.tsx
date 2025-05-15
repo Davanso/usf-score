@@ -10,7 +10,7 @@ export interface Competition {
   icon: React.ReactNode;
 }
 
-const COMPETITIONS: Competition[] = [
+export const COMPETITIONS: Competition[] = [
   { id: 1, name: "Brasileirão", icon: <BR className="w-6 h-4" /> },
   { id: 2, name: "La Liga", icon: <ES className="w-6 h-4" /> },
   { id: 3, name: "Premier League", icon: <GB className="w-6 h-4" /> },
@@ -22,13 +22,24 @@ const COMPETITIONS: Competition[] = [
 ];
 
 const MainCompetitions: React.FC = () => {
-  const [favorites, setFavorites] = useState<number[]>([]);
+  // Estado para armazenar os favoritos
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    const stored = localStorage.getItem("favorites");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  // Estado para controlar a exibição de todas as competições
   const [showAll, setShowAll] = useState(false);
 
+  // Efeito para armazenar os favoritos no localStorage
   const toggleFavorite = useCallback((id: number) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
-    );
+    setFavorites((prev) => {
+      const updated = prev.includes(id)
+        ? prev.filter((favId) => favId !== id)
+        : [...prev, id];
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      return updated;
+    });
   }, []);
 
   const toggleShowAll = useCallback(() => {

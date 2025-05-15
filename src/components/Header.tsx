@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaSearch,
   FaStar,
@@ -10,9 +10,34 @@ import {
 import { IoIosFootball, IoIosSettings } from "react-icons/io";
 import { MdScoreboard } from "react-icons/md";
 import { useLogin } from "../hooks/useLogin";
+import { COMPETITIONS } from "./Main_Competitions";
 
 const Header = () => {
+  // Estado para armazenar o usuário
   const { user, loginWithGoogle, logout, loading } = useLogin();
+
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  // Efeito para armazenar os favoritos no localStorage
+  useEffect(() => {
+    const loadFavorites = () => {
+      const stored = localStorage.getItem("favorites");
+      if (stored) {
+        setFavorites(JSON.parse(stored));
+      }
+    };
+
+    loadFavorites();
+
+    window.addEventListener("storage", loadFavorites);
+    return () => window.removeEventListener("storage", loadFavorites);
+  }, []);
+
+  // Função para alternar o estado do dropdown
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+  };
 
   return (
     <header className="bg-[#181818] text-white w-full px-20 py-2">
@@ -56,14 +81,47 @@ const Header = () => {
           ) : (
             <button
               onClick={loginWithGoogle}
-              className="bg-white text-black px-5 py-2 rounded text-xl font-medium cursor-pointer hover:bg-gray-200 transition duration-200 ease-in-out "
+              className="bg-white text-black px-5 py-2 rounded-2xl text-xl font-medium cursor-pointer hover:bg-gray-200 transition duration-200 ease-in-out "
               disabled={loading}
             >
               <FaUser size={25} className="inline mr-1" />
               {loading ? "Carregando..." : "ENTRAR"}
             </button>
           )}
-          <FaStar size={22} />
+          <div className="relative">
+            <button onClick={toggleDropdown}>
+              <FaStar size={22} className="hover:text-yellow-400 transition" />
+            </button>
+
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-56 bg-[#2a2a2a] rounded-2xl shadow-lg z-50 text-sm text-white">
+                <div className="px-4 py-2 font-semibold border-b border-gray-600">
+                  Favoritos
+                </div>
+                {favorites.length === 0 ? (
+                  <div className="px-4 py-2 text-gray-400">Nenhum favorito</div>
+                ) : (
+                  <ul className="max-h-60 overflow-y-auto rounded-2xl">
+                    {favorites.map((id) => {
+                      const comp = COMPETITIONS.find(
+                        (c: { id: number }) => c.id === id
+                      );
+                      return comp ? (
+                        <li
+                          key={id}
+                          className="px-4 py-2 hover:bg-red-900 flex items-center gap-2"
+                        >
+                          {comp.icon}
+                          {comp.name}
+                        </li>
+                      ) : null;
+                    })}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+
           <FaQuestion size={22} />
           <IoIosSettings size={25} />
         </div>
