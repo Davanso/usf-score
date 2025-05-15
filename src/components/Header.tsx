@@ -18,6 +18,7 @@ const Header = () => {
 
   const [favorites, setFavorites] = useState<number[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showInfoDialog, setShowInfoDialog] = useState(false);
 
   // Efeito para armazenar os favoritos no localStorage
   useEffect(() => {
@@ -33,6 +34,10 @@ const Header = () => {
     window.addEventListener("storage", loadFavorites);
     return () => window.removeEventListener("storage", loadFavorites);
   }, []);
+
+  const toggleInfoDialog = () => {
+    setShowInfoDialog((prev) => !prev);
+  };
 
   // Função para alternar o estado do dropdown
   const toggleDropdown = () => {
@@ -61,36 +66,43 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Ações */}
         <div className="flex items-center gap-4 text-gray-300">
-          {user ? (
-            <div className="flex items-center gap-2 bg-white text-black px-4 py-1 rounded cursor-pointer">
-              <img
-                src={user.photo}
-                alt={user.name}
-                className="w-8 h-8 rounded-full"
-              />
-              <span className="text-sm font-medium">{user.name}</span>
+          {/* Login/Logout */}
+          <div>
+            {user ? (
+              <div className="flex items-center gap-2 bg-white text-black px-4 py-1 rounded cursor-pointer">
+                <img
+                  src={user.photo}
+                  alt={user.name}
+                  className="w-8 h-8 rounded-full"
+                />
+                <span className="text-sm font-medium">{user.name}</span>
+                <button
+                  onClick={logout}
+                  className="ml-2 text-xs text-black hover:text-red-500 cursor-pointer"
+                >
+                  sair
+                </button>
+              </div>
+            ) : (
               <button
-                onClick={logout}
-                className="ml-2 text-xs text-black hover:text-red-500 cursor-pointer"
+                onClick={loginWithGoogle}
+                className="bg-white text-black px-5 py-2 rounded-2xl text-xl font-medium cursor-pointer hover:bg-gray-200 transition duration-200 ease-in-out "
+                disabled={loading}
               >
-                sair
+                <FaUser size={25} className="inline mr-1" />
+                {loading ? "Carregando..." : "ENTRAR"}
               </button>
-            </div>
-          ) : (
-            <button
-              onClick={loginWithGoogle}
-              className="bg-white text-black px-5 py-2 rounded-2xl text-xl font-medium cursor-pointer hover:bg-gray-200 transition duration-200 ease-in-out "
-              disabled={loading}
-            >
-              <FaUser size={25} className="inline mr-1" />
-              {loading ? "Carregando..." : "ENTRAR"}
-            </button>
-          )}
+            )}
+          </div>
+
+          {/* Favoritos */}
           <div className="relative">
             <button onClick={toggleDropdown}>
-              <FaStar size={22} className="hover:text-yellow-400 transition" />
+              <FaStar
+                size={22}
+                className="hover:text-yellow-400 transition cursor-pointer"
+              />
             </button>
 
             {showDropdown && (
@@ -122,7 +134,13 @@ const Header = () => {
             )}
           </div>
 
-          <FaQuestion size={22} />
+          {/* Question */}
+          <FaQuestion
+            size={22}
+            onClick={toggleInfoDialog}
+            className="cursor-pointer hover:text-red-900 transition"
+          />
+
           <IoIosSettings size={25} />
         </div>
       </div>
@@ -144,6 +162,45 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {/* Dialog de informações */}
+      {showInfoDialog && (
+        <div className="fixed inset-0 bg-opacity-30 flex items-center justify-center z-50 backdrop-blur-sm  transition-all duration-500 transform origin-top">
+          <div className="bg-white text-black max-w-md w-full p-6 rounded-2xl shadow-lg relative">
+            <button
+              className="absolute top-6 right-5 text-gray-600 hover:text-red-900 cursor-pointer"
+              onClick={toggleInfoDialog}
+            >
+              ✕
+            </button>
+            <h2 className="text-xl font-semibold mb-4">Sobre o Aplicativo</h2>
+            <p className="text-sm leading-relaxed">
+              Este projeto foi desenvolvido como parte de um exercício acadêmico
+              na USF (Universidade São Francisco). O objetivo é demonstrar, de
+              forma prática, como estatísticas de partidas esportivas podem ser
+              integradas com APIs, armazenadas, processadas e exibidas de forma
+              visual e interativa.
+            </p>
+            <br />
+            {/* <p className="text-sm leading-relaxed">
+              GRUPO: <br />
+              <strong>
+                Guilherme Destro Davanso - 202201495
+                <br />
+                Thales Gabriel de Paula - 202345975
+                <br />
+                Igor Takahashi - 202328746
+                <br />
+                Matheus Henrique Villaça Ribeiro - 202352530
+                <br />
+                Nathan Arjona Pereira - 202345324
+                <br />
+                Luís Fernando Pauleto - 202525632
+              </strong>
+            </p> */}
+          </div>
+        </div>
+      )}
     </header>
   );
 };
