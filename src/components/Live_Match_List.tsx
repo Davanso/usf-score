@@ -1,34 +1,44 @@
 // src/components/LiveMatchesList.tsx
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LiveMatchCard from "./Live_Match_Card";
 import { getLiveBrazilianMatch } from "../../services/apiFootball";
 
-// Mesmo tipo usado no LiveMatchCard
-interface Props {
-  match: {
-    teams: {
-      home: { name: string; logo: string };
-      away: { name: string; logo: string };
-    };
-    goals: { home: number; away: number };
-    status: { elapsed: number };
-    league: {
-      name: string;
-      country?: string;
-    };
+interface Team {
+  name: string;
+  logo: string;
+}
+
+interface MatchData {
+  teams: {
+    home: Team;
+    away: Team;
+  };
+  goals: {
+    home: number;
+    away: number;
+  };
+  status: {
+    elapsed: number;
+  };
+  league: {
+    name: string;
+    country?: string;
+  };
+  fixture: {
+    id: number;
   };
 }
 
 const LiveMatchesList = () => {
-  const [matches, setMatches] = useState<Props[]>([]);
+  const [matches, setMatches] = useState<MatchData[]>([]);
 
   useEffect(() => {
     const fetchMatches = async () => {
       const data = await getLiveBrazilianMatch();
 
-      // Transforma em array para manter compatibilidade com renderização múltipla
-      setMatches([data]);
+      const matchArray = Array.isArray(data) ? data : [data];
+      setMatches(matchArray); // ✅ Aqui agora é sempre array
     };
 
     fetchMatches();
@@ -39,8 +49,8 @@ const LiveMatchesList = () => {
 
   return (
     <div className="space-y-4">
-      {matches.map((match, index) => (
-        <LiveMatchCard key={index} match={match} />
+      {matches.map((match) => (
+        <LiveMatchCard key={match.fixture.id} match={match} />
       ))}
     </div>
   );

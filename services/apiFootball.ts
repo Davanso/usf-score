@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import liveBrazilianMatchMock from "../mocks/liveBrazilianMatchMock";
-import oddsMock from "../mocks/oddsMock";
+import oddsMock from "../mocks/OddsMock";
 
 const USE_MOCK = true;
 
