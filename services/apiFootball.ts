@@ -22,10 +22,21 @@ export const getOdds = async (fixtureId: number) => {
       params: { live: "all", bookmaker: 6, fixture: fixtureId },
     });
 
-    return data.response?.[0]?.bookmakers || null;
+    const bookmaker = data.response?.[0]?.bookmakers?.[0]; // Pega o primeiro bookmaker
+
+    if (!bookmaker || !bookmaker.bets) return [];
+
+    const formattedOdds = bookmaker.bets.flatMap((bet: any) =>
+      bet.values.map((val: any) => ({
+        label: `${bet.label} - ${val.value}`,
+        odd: val.odd,
+      }))
+    );
+
+    return formattedOdds;
   } catch (error) {
     console.error("Erro ao buscar odds:", error);
-    return null;
+    return [];
   }
 };
 
