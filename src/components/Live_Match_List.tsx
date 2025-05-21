@@ -1,33 +1,29 @@
-// src/components/LiveMatchesList.tsx
-
 import { useEffect, useState } from "react";
 import LiveMatchCard from "./Live_Match_Card";
 import { getLiveBrazilianMatch } from "../../services/apiFootball";
 
-// Mesmo tipo usado no LiveMatchCard
-interface Props {
-  match: {
-    teams: {
-      home: { name: string; logo: string };
-      away: { name: string; logo: string };
-    };
-    goals: { home: number; away: number };
-    status: { elapsed: number };
-    league: {
-      name: string;
-      country?: string;
-    };
+// Novo tipo para representar os dados da partida
+interface Match {
+  teams: {
+    home: { name: string; logo: string };
+    away: { name: string; logo: string };
+  };
+  goals: { home: number; away: number };
+  status: { elapsed: number };
+  league: {
+    name: string;
+    country?: string;
   };
 }
 
 const LiveMatchesList = () => {
-  const [matches, setMatches] = useState<Props[]>([]);
+  const [matches, setMatches] = useState<Match[]>([]);
 
   useEffect(() => {
     const fetchMatches = async () => {
       const data = await getLiveBrazilianMatch();
 
-      // Transforma em array para manter compatibilidade com renderização múltipla
+      // Coloca o dado em um array
       setMatches([data]);
     };
 
