@@ -2,38 +2,50 @@ const liveBrazilianMatchMock = [
   {
     teams: {
       home: {
-        name: "São Paulo",
-        logo: "https://media.api-sports.io/football/teams/126.png",
+        name: "Corinthians",
+        logo: "https://media.api-sports.io/football/teams/131.png",
       },
       away: {
-        name: "Guarani",
-        logo: "https://media.api-sports.io/football/teams/138.png",
+        name: "Ponte Preta",
+        logo: "https://media.api-sports.io/football/teams/139.png",
       },
     },
-    goals: { home: 2, away: 1 },
+    goals: { home: 3, away: 2 },
     events: [
       {
-        time: { elapsed: 15 },
-        team: { name: "São Paulo" },
-        player: { name: "Rogério Ceni" },
+        time: { elapsed: 5 },
+        team: { name: "Corinthians" },
+        player: { name: "Yuri Alberto" },
         type: "Goal",
       },
       {
-        time: { elapsed: 33 },
-        team: { name: "Guarani" },
-        player: { name: "Messi" },
+        time: { elapsed: 25 },
+        team: { name: "Ponte Preta" },
+        player: { name: "Jeh" },
         type: "Goal",
       },
       {
-        time: { elapsed: 55 },
-        team: { name: "São Paulo" },
-        player: { name: "Rogério Ceni" },
+        time: { elapsed: 35 },
+        team: { name: "Corinthians" },
+        player: { name: "Yuri Alberto" },
+        type: "Goal",
+      },
+      {
+        time: { elapsed: 60 },
+        team: { name: "Corinthians" },
+        player: { name: "Memphis Depay" },
+        type: "Goal",
+      },
+      {
+        time: { elapsed: 75 },
+        team: { name: "Ponte Preta" },
+        player: { name: "Jonas Toró" },
         type: "Goal",
       },
     ],
-    status: { elapsed: 87 },
-    league: { name: "Brasileirão Série A", country: "Brasil" },
-    fixture: { id: 12345, status: { elapsed: 87 } },
+    status: { elapsed: 85 },
+    league: { name: "Paulista", country: "Brasil" },
+    fixture: { id: 12348, status: { elapsed: 85 } },
   },
   {
     teams: {
@@ -81,54 +93,6 @@ const liveBrazilianMatchMock = [
     status: { elapsed: 40 },
     league: { name: "Paulista", country: "Brasil" },
     fixture: { id: 12347, status: { elapsed: 40 } },
-  },
-  {
-    teams: {
-      home: {
-        name: "Corinthians",
-        logo: "https://media.api-sports.io/football/teams/131.png",
-      },
-      away: {
-        name: "Ponte Preta",
-        logo: "https://media.api-sports.io/football/teams/139.png",
-      },
-    },
-    goals: { home: 3, away: 2 },
-    events: [
-      {
-        time: { elapsed: 5 },
-        team: { name: "Corinthians" },
-        player: { name: "Renato Augusto" },
-        type: "Goal",
-      },
-      {
-        time: { elapsed: 25 },
-        team: { name: "Ponte Preta" },
-        player: { name: "Bruno Rodrigues" },
-        type: "Goal",
-      },
-      {
-        time: { elapsed: 35 },
-        team: { name: "Corinthians" },
-        player: { name: "Yuri Alberto" },
-        type: "Goal",
-      },
-      {
-        time: { elapsed: 60 },
-        team: { name: "Corinthians" },
-        player: { name: "Fausto Vera" },
-        type: "Goal",
-      },
-      {
-        time: { elapsed: 75 },
-        team: { name: "Ponte Preta" },
-        player: { name: "Zé Roberto" },
-        type: "Goal",
-      },
-    ],
-    status: { elapsed: 85 },
-    league: { name: "Paulista", country: "Brasil" },
-    fixture: { id: 12348, status: { elapsed: 85 } },
   },
   {
     teams: {

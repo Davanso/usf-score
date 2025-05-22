@@ -70,7 +70,7 @@ const MatchHighlights: React.FC = () => {
   const goals = match.events?.filter((event) => event.type === "Goal") || [];
 
   return (
-    <div className="p-8 mt-10 w-[400px] h-[650px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white overflow-hidden mx-auto">
+    <div className="p-8 mt-10 w-[400px] h-[670px] flex flex-col rounded-2xl gap-4 shadow-md bg-[#181818] text-white overflow-hidden mx-auto">
       <div className="text-center font-bold text-lg border-b border-gray-700">
         Ao Vivo - {match.league?.name || "Liga desconhecida"}
       </div>
@@ -115,10 +115,10 @@ const MatchHighlights: React.FC = () => {
             {goals.map((event, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-2"
+                className="flex items-center justify-between gap-1"
               >
                 {/* Jogador do time da casa, alinhado à direita */}
-                <div className="w-1/3 text-right pr-2">
+                <div className="w-1/3 text-right pr-0.5">
                   {event.team.name === match.teams?.home?.name && (
                     <span>
                       {event.player.name} {event.time.elapsed}&apos;
@@ -127,12 +127,12 @@ const MatchHighlights: React.FC = () => {
                 </div>
 
                 {/* Ícone de bola no centro */}
-                <div className="w-1/3 flex justify-center text-green-500">
+                <div className="flex justify-center text-green-500 w-[18px]">
                   <FaFutbol />
                 </div>
 
                 {/* Jogador do time visitante, alinhado à esquerda */}
-                <div className="w-1/3 text-left pl-2">
+                <div className="w-1/3 text-left pl-0.5">
                   {event.team.name === match.teams?.away?.name && (
                     <span>
                       {event.player.name} {event.time.elapsed}&apos;
