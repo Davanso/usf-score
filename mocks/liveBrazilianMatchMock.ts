@@ -178,36 +178,6 @@ const liveBrazilianMatchMock = [
     league: { name: "Mineiro", country: "Brasil" },
     fixture: { id: 12349, status: { elapsed: 90 } },
   },
-  {
-    teams: {
-      home: {
-        name: "Cruzeiro",
-        logo: "https://media.api-sports.io/football/teams/135.png",
-      },
-      away: {
-        name: "Atlético-MG",
-        logo: "https://media.api-sports.io/football/teams/1062.png",
-      },
-    },
-    goals: { home: 0, away: 2 },
-    events: [
-      {
-        time: { elapsed: 12 },
-        team: { name: "Atlético-MG" },
-        player: { name: "Hulk" },
-        type: "Goal",
-      },
-      {
-        time: { elapsed: 65 },
-        team: { name: "Atlético-MG" },
-        player: { name: "Paulinho" },
-        type: "Goal",
-      },
-    ],
-    status: { elapsed: 90 },
-    league: { name: "Mineiro", country: "Brasil" },
-    fixture: { id: 12349, status: { elapsed: 90 } },
-  },
 ];
 
 export default liveBrazilianMatchMock;

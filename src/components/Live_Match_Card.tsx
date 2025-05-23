@@ -24,7 +24,11 @@ const LiveMatchCard: React.FC<Props> = ({ match }) => {
           <p className="text-2xl font-bold text-red-500">
             {match.goals.home} - {match.goals.away}
           </p>
-          <p className="text-xs text-gray-400">{match.status.elapsed}'</p>
+          <p className="text-xs text-gray-400">
+            {match.status && typeof match.status.elapsed === "number"
+              ? `${match.status.elapsed}'`
+              : "--"}
+          </p>
         </div>
 
         <div className="flex flex-col items-center justify-center text-center w-full sm:w-1/3">
