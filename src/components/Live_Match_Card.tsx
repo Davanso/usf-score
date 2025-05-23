@@ -7,7 +7,7 @@ interface Props {
 
 const LiveMatchCard: React.FC<Props> = ({ match }) => {
   return (
-    <div className="bg-[#111] flex flex-col items-center px-4 py-3 sm:py-4 rounded-md mb-3 sm:mb-4 w-full sm:w-[90%] mx-auto">
+    <div className="bg-[#111] flex flex-col items-center px-2 py-2 sm:py-4 rounded-md mb-3 sm:mb-4 w-full sm:w-[90%] mx-auto">
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch justify-between w-full gap-4 sm:gap-0">
         <div className="flex flex-col items-center justify-center text-center w-full sm:w-1/3">
           <img

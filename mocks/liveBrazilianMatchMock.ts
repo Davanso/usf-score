@@ -122,7 +122,7 @@ const liveBrazilianMatchMock = [
     ],
     status: { elapsed: 90 },
     league: { name: "Mineiro", country: "Brasil" },
-    fixture: { id: 12349, status: { elapsed: 90 } },
+    fixture: { id: 12347, status: { elapsed: 90 } },
   },
   {
     teams: {
