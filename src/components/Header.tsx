@@ -64,10 +64,15 @@ const Header = () => {
       }
     };
 
+    // Carrega favoritos ao montar o componente
     loadFavorites();
 
-    window.addEventListener("storage", loadFavorites);
-    return () => window.removeEventListener("storage", loadFavorites);
+    // Atualiza favoritos quando evento for disparado
+    window.addEventListener("favoritesUpdated", loadFavorites);
+
+    return () => {
+      window.removeEventListener("favoritesUpdated", loadFavorites);
+    };
   }, []);
 
   const toggleInfoDialog = () => {

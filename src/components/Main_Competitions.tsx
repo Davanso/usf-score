@@ -38,6 +38,10 @@ const MainCompetitions: React.FC = () => {
         ? prev.filter((favId) => favId !== id)
         : [...prev, id];
       localStorage.setItem("favorites", JSON.stringify(updated));
+
+      // 🔔 Dispara evento para avisar outros componentes
+      window.dispatchEvent(new Event("favoritesUpdated"));
+
       return updated;
     });
   }, []);
